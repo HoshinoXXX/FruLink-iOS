@@ -1,0 +1,9 @@
+Package: com.tendouaris.frulink
+Name: FruLink
+Version: 1.5.12
+Architecture: iphoneos-arm
+Description: FruLink 網頁客戶端（Android 1.5.12 的 iOS 越獄移植版，免 Apple 簽名，iOS 5+，iPhone/iPad 通用）
+Maintainer: FruLink
+Author: FruLink
+Section: Applications
+Depends: firmware (>= 5.0)

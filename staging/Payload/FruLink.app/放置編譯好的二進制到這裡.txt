@@ -1,0 +1,16 @@
+﻿此目錄是 IPA 內 Payload/FruLink.app 的裝箱預覽（不含可執行文件）。
+
+最終產物 = 本目錄 + 編譯出的 Mach-O 二進制「FruLink」：
+
+1. 在 macOS 上運行工程根目錄的 build-ipa.sh：
+   ./build-ipa.sh
+   它會自動完成編譯、複製資源、ldid -S 假簽名並打包為
+   FruLink_1.5.12_jailbreak.ipa。
+
+2. 若手動組裝：
+   - 把編譯好的二進制命名為 FruLink 放入本目錄
+   - ldid -S Payload/FruLink.app/FruLink
+   - cd 到 staging 目錄，執行：zip -qry ../FruLink_1.5.12_jailbreak.ipa Payload
+
+技術說明：Windows 上無法編譯 iOS Mach-O 二進制（需要 macOS + Xcode/
+clang + iOS SDK），因此預覽中沒有可執行文件；其餘內容均為最終產物。

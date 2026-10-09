@@ -1,0 +1,42 @@
+# ============================================================
+#  無需擁有 Mac：用 GitHub Actions 雲端免費 macOS 構建 IPA
+#
+#  用法：
+#   1. 把整個 FruLink-iOS 目錄推到 GitHub 倉庫
+#   2. 倉庫頁面 → Actions → 「Build iOS IPA」→ Run workflow
+#   3. 構建完成後在該次運行頁面下載 Artifact：
+#      FruLink-jailbreak-ipa（裏面就是 FruLink_1.5.12_jailbreak.ipa）
+#
+#  說明：GitHub macOS 託管機自帶 Xcode + iOS SDK，本工作流自動
+#  安裝 ldid 並執行 build-ipa.sh（arm64，最低系統 12.0，覆蓋
+#  iOS 12+ 全部越獄設備）。iOS 5–10 的 32 位老設備仍需本機舊版
+#  Xcode（見 build-legacy-armv7.sh），雲端無法提供舊 SDK。
+# ============================================================
+name: Build iOS IPA
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: macos-13
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install ldid (fake-sign tool)
+        run: brew install ldid
+
+      - name: Build unsigned IPA
+        run: |
+          chmod +x build-ipa.sh
+          ./build-ipa.sh iphoneos arm64 12.0
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: FruLink-jailbreak-ipa
+          path: FruLink_1.5.12_jailbreak.ipa
